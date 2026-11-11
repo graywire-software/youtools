@@ -1,60 +1,67 @@
-# YouTools
+﻿# YouTools
 
-A standalone Manifest V3 extension for desktop YouTube in Brave and Chrome.
+YouTools is a browser extension for making desktop YouTube feel more like yours. Add convenient player buttons, choose which kinds of content appear, and arrange the sidebar around the links you use. It works in Brave and Chrome and saves your choices in your browser.
 
-The player controls are ordered **Miniplayer → Picture-in-picture → Theater mode**. Miniplayer opens YouTube's own in-page player; PiP opens the browser's floating video window. The matching native control/menu entry is hidden to avoid duplicates. YouTube's Miniplayer retains its normal expand and close controls.
+## What you can do
 
-Click the YouTools toolbar icon for player controls, content visibility, sidebar customization, and app-window settings. Visibility switches consistently mean **on = visible, off = hidden**. A fresh installation preserves YouTube's normal content and sidebar, so those switches start on; optional player buttons, red icons, condensed layouts, and app-window overrides start off.
+### Control your player
 
-| Content | Hidden when switched off |
-| --- | --- |
-| Shorts videos | Shorts shelves and video cards in feeds, search, and recommendations |
-| Shorts navigation | Shorts sidebar links, channel tabs, and filter chips |
-| Playables | Playable game cards, shelves, and navigation |
-| Games | Gaming navigation, dedicated game cards, and game shelves |
-| Primetime & movies | Primetime/movie shelves, dedicated movie cards, and movie-store navigation |
+Add buttons beside YouTube’s Theater mode control:
 
-Changes apply to open YouTube tabs. Turning a visibility switch on restores matching elements without reloading. Reset restores normal visibility and ordering and switches optional customizations off. Updating the extension preserves explicitly saved preferences, including hide choices from older versions. Regular videos about games, movies, or Shorts stay visible. Direct links are not redirected or blocked.
+- **Miniplayer** opens YouTube’s own in-page player, so you can keep browsing while you watch.
+- **Picture-in-picture** opens a floating browser window that stays available while you use other apps or tabs.
 
-Version 0.6.1 also recognizes movie/TV rating badges (including PG-13) on recommendation cards. It checks badge and metadata fields rather than matching ratings mentioned in video titles or descriptions. Recycled cards and late badge changes are rechecked; identified ads and sponsored cards stay visible.
+Both buttons are optional. Miniplayer availability depends on YouTube and the video; picture-in-picture requires browser support and a playable video.
 
-Verification for 0.6.1: all 26 integration tests passed in an isolated Brave profile. No live debugging was performed for this release.
+### Choose what you see
 
-Ads and identified sponsored content are excluded from filtering, including sponsored movie promotions. YouTools does not intercept network requests, alter ad playback, skip ads, or modify YouTube's advertising systems. Browser features or other installed extensions operate independently.
+Independently show or hide:
 
-## Install in Brave or Chrome
+- **Shorts videos**, including shelves and cards in feeds, search, and recommendations.
+- **Shorts navigation**, including sidebar links, channel tabs, and filter chips.
+- **Playables**, including game cards, shelves, and navigation.
+- **Games**, including gaming navigation and dedicated game cards and shelves.
+- **Primetime and movies**, including movie shelves, dedicated cards, and movie-store navigation.
 
-1. Open `brave://extensions` or `chrome://extensions`.
+Regular videos about games or movies stay visible, and direct links are not blocked. Ads and identified sponsored content are excluded from filtering; YouTools does not block or skip ads. Changes apply to open YouTube tabs, and turning a category back on restores it without a reload.
+
+### Make the sidebar your own
+
+- Show or hide sidebar sections and individual links.
+- Drag sections and links into your preferred order; keyboard controls are available too.
+- Replace the full subscriptions list with a compact shortcut.
+- Move footer links into a **Site navigation** menu at the bottom of the sidebar.
+- Give sidebar icons a YouTube-red accent.
+
+YouTube’s own expandable groups and links continue to work. Available links depend on your account.
+
+### Customize your YouTube app window
+
+If you use YouTube as an installed browser app, choose a dark, light, or custom title-bar color. You can also use a short or custom page title. Page titles change in regular YouTube tabs too; title-bar appearance depends on the browser and operating system.
+
+YouTools works on its own. If you also use the compatible PWA Customizer extension, the two can share YouTube’s title and color settings in the same browser profile.
+
+## Getting started
+
+1. Open `brave://extensions` in Brave or `chrome://extensions` in Chrome.
 2. Turn on **Developer mode**.
-3. Click **Load unpacked** and select this folder:
+3. Select **Load unpacked** and choose the `extension` folder inside this project.
+4. Pin YouTools from the browser’s Extensions menu, then refresh any open YouTube tabs.
+5. Click the YouTools toolbar icon to choose your settings.
 
-   `E:\Google Drive\My Drive\Projects\youtools\extension`
+No build or dependency installation is needed to load the extension. Keep the selected folder in place, or copy it to a local disk before loading it. After updating the unpacked extension, click **Reload** on its extensions page and refresh YouTube tabs. The popup shows the registered version.
 
-4. Pin YouTools using the browser's Extensions menu.
-5. Refresh existing YouTube tabs and choose your options in the YouTools popup. Enabled player buttons appear immediately left of Theater mode.
+The popup groups options under **Player controls**, **Suggested content**, **Customize sidebar**, and **Customize app window**. Visibility switches use **on = visible** and **off = hidden**. On a fresh install, YouTube’s normal content and sidebar remain visible; optional customizations start off. **Reset** restores those defaults and the original sidebar order.
 
-The `extension` folder is ready to load; no build or dependency installation is required. Keep it in place while using the unpacked extension. You can copy it to a local disk first if you do not want the loaded extension to depend on Google Drive being available. To update it after source changes, click **Reload** on the extension card, then refresh YouTube.
+## Privacy and compatibility
 
-`dist/YouTools-0.6.1.zip` contains the same extension with `manifest.json` at its root. It has not been submitted to the store. Configure the companion IDs described below before publishing or moving the unpacked extensions.
+YouTools runs on desktop `youtube.com` and stores preferences locally in your browser profile. It has no account, analytics, external server, or remote code. Its only extension API permission is storage. When configured, it exchanges YouTube app-window settings locally with PWA Customizer. See [PRIVACY.md](PRIVACY.md) for details.
 
-For updates to an unpacked extension, reload **YouTools itself** on the extensions page before refreshing YouTube. Refreshing YouTube or clearing its cache does not update the browser's registered content-script list. The version badge in the popup shows the version actually registered in the browser.
+YouTube changes frequently, so some features may need updates as its interface changes. Some sidebar and filtering choices depend on English interface labels. Unknown content and sidebar entries are left visible.
 
-## Permissions and privacy
+## Development
 
-Site access is limited to `https://www.youtube.com/*` and `https://youtube.com/*`; embedded players and other YouTube subdomains are outside this scope. There is no access to other websites, browser history, cookies, downloads, or installed extensions.
-
-The only extension API permission is `storage`, used to remember preferences, navigation order, and app-window settings in `chrome.storage.local`. It adds no additional site access. Settings stay in that browser profile; they are not synced between Brave and Chrome. A local service worker exchanges only YouTube app-window preferences with the configured PWA Customizer extension. There is no account, server, analytics, remote code, or dependency on another extension. See [PRIVACY.md](PRIVACY.md).
-
-## Behavior and compatibility
-
-- PiP requires a playable video and browser support. An error message appears if it cannot open. The original `disablepictureinpicture` preference, if present, is restored when PiP ends.
-- Miniplayer uses YouTube's existing button where available, otherwise its native context-menu action. It does not rely on the removed `i` shortcut or private JavaScript player APIs. Full screen must be exited before using Miniplayer. YouTube can disallow Miniplayer for particular videos.
-- YouTube changes its markup frequently. Unknown content remains visible. URL and renderer-based matching handles most filters; some shelf names, channel tabs, and menu fallbacks are specific to the English interface. The current Miniplayer icon is also recognized independently of the interface language.
-- The main controls are added on `/watch` pages. YouTube SPA navigation and replacement player controls are handled automatically.
-
-## Development and verification
-
-The extension itself is plain JavaScript, HTML, and CSS. Node.js 20+ and Playwright are needed only for development tests and icon generation.
+The extension is built with JavaScript, HTML, and CSS. Node.js 20+ and Playwright are needed for development checks and tests, not for installation.
 
 ```sh
 npm ci
@@ -64,76 +71,8 @@ npm test
 npm run package
 ```
 
-The integration tests load the actual extension into a fresh browser profile. They cover independent filters, ads, recycled cards, saved popup preferences, SPA control replacement, native HTML-video PiP entry/exit, and the Miniplayer context-menu integration. They use controlled YouTube-shaped fixtures; they are not a guarantee about every live YouTube experiment.
+The tests run the extension in isolated browser profiles against controlled fixtures. `dist/YouTools-0.6.1.zip` is the packaged extension; it has not been submitted to the store.
 
-For installed Brave on Windows:
+For PWA Customizer integration, both extensions must allowlist each other’s extension IDs. Unpacked IDs depend on their folder paths. After moving either project, run `node scripts/configure-pwa-sync.mjs` and reload both extensions; the sibling project is expected to be named `pwa customizer`. For store builds, pass both assigned IDs to that script before packaging. The promotional link in `extension/pwa-popup.js` also needs the actual listing URL before publication.
 
-```powershell
-$env:YOUTOOLS_BROWSER = 'C:\Program Files\BraveSoftware\Brave-Browser\Application\brave.exe'
-npm.cmd test
-node scripts/live-smoke.mjs
-```
-
-Google Drive streaming volumes may reject npm package extraction. Install development dependencies on a local disk and point the test helper there:
-
-```powershell
-$env:YOUTOOLS_TOOLING = Join-Path $env:LOCALAPPDATA 'YouTools-dev'
-npm.cmd install --prefix $env:YOUTOOLS_TOOLING playwright@1.64.1
-$env:YOUTOOLS_BROWSER = 'C:\Program Files\BraveSoftware\Brave-Browser\Application\brave.exe'
-npm.cmd test
-```
-
-The live smoke test uses a temporary, signed-out profile and writes results under `test-results/`. It does not attach to or change your personal browser profile. If YouTube requires sign-in/bot verification, it reports that limitation and continues checking search filtering. Do not use it to bypass YouTube's restrictions.
-
-The integration suite covers native player behavior, normal-content defaults, Reset, nested menus, mouse dragging, keyboard ordering, linked Subscriptions switches, fixed Footer and Show more rows, per-entry visibility, native expansion, footer hover/keyboard access, and restoration of original links. The six app-window tests exercise both extensions, real cross-extension messages, UI edits, restoration, conflicting/stale saves, companion downtime, standalone operation, legacy preference migration, and mirroring without a companion website grant. Their temporary copies change only extension-ID allowlists and fixture host grants; runtime scripts are unchanged. Version 0.6.1 adds regression checks for movie rating badges, ad exclusions, recycled metadata, consistent visibility switches, and the placement of Red icons and the companion promotion. Testing uses isolated browser profiles. App-window checks verify document titles and theme-color metadata; the browser's native PWA frame remains browser-controlled.
-
-Extension icons are exported from `icon/icon.svg` at 16, 32, 48, and 128 pixels. Version 0.5.2 includes the updated SVG and regenerated PNG files. Run `node scripts/generate-icons.mjs` to regenerate them after changing the source artwork.
-
-Version 0.3.2 fixes the condensed Subscriptions shortcut's color and alignment. It uses YouTube's native link theme styling because some builds no longer expose the public text-color variable. Its icon, text, and row width were checked against Home in the signed-in Brave sidebar; all matched. All eleven integration tests passed again.
-
-## Implementation references
-
-- [Chrome content scripts](https://developer.chrome.com/docs/extensions/develop/concepts/content-scripts)
-- [Chrome local storage API](https://developer.chrome.com/docs/extensions/reference/api/storage)
-- [Chrome video Picture-in-Picture](https://developer.chrome.com/blog/entering-picture-in-picture)
-
-YouTools is an independent project, not affiliated with YouTube or Google.
-
-
-## Sidebar customization
-
-The popup opens with four collapsed menus: **Player controls**, **Suggested content**, **Customize sidebar**, and **Customize app window**. Player control icons are retained; suggested-content rows have no icons. Existing saved preferences are preserved. Optional customizations start off for new installations; Reset restores normal visibility and the original ordering.
-
-Customize sidebar contains six nested menus: Top Menu, Subscriptions, You, Explore, More from YT, and Footer, followed by Red icons at the end. Drag the first five menu headings to reorder the corresponding sections. Their inline switches show sections when on and hide them when off. Footer is the last submenu and has no hide switch or drag handle.
-
-Inside Top Menu, You, Explore, and More from YT, drag entries to reorder them. Inline switches show entries when on and hide them when off. Hiding a section also hides its entries; their individual choices are retained. The Top Menu Condensed Subscriptions switch shows the shortcut when on; it is linked to the Condensed subscriptions switch in the Subscriptions menu. Enabling it replaces the full channel list with the shortcut. This feature starts off.
-
-You includes Your channel, History, Playlists, Watch later, Liked videos, Your videos, Downloads, Courses, and Show more. Explore includes Music, Live, Podcasts, Memberships, and Show more. More from YT includes YT TV, YT Music, and YT Kids. Show more is fixed at the end of both lists; switching it off also hides Show less. Controls only affect entries available on the current account. Unknown entries remain intact. Existing native nodes and click handlers are retained, including Downloads and expandable groups.
-
-Drag handles also support Up/Down and Home/End keys. Ordering is saved independently of visibility and reapplied after navigation. Reordering within a section uses the existing slots, including slots behind Show more, so native expansion remains available.
-
-**Condensed footer** moves Report history and all existing footer links into **Site navigation >**, at the bottom of the sidebar. Hover to open its flyout; click or use the keyboard to open it as well. Escape dismisses it. The original links, destinations, and handlers are preserved, and disabling the option restores their original locations. The footer cannot be hidden or reordered. The copyright notice stays visible in the original footer below Site navigation >.
-
-Red icons colors expanded-sidebar icons #ff0033, while chevrons keep their native color. Channel avatars retain their original images. English interface labels are used to identify sidebar entries; labels in the extension's More from YT menu use YT.
-
-## App-window customization (0.6.0)
-
-**Recolor title bar** offers Force dark (`#202124`), Force light (`#F5F5F5`), and a custom color. Enter three or six hex digits or choose a color, then Apply. This changes the page's theme-color hint for supported installed-app title bars; regular desktop tabs may not visibly change. The browser still controls the native window frame.
-
-**Change page title** offers Short page title (`YouTube`) or up to 200 characters of custom text. Apply or press Enter to save custom text. Titles also change in regular YouTube tabs. The browser may retain the installed app name in the native window title; this does not rename the installed application. Turning either feature off restores YouTube's current value and remembers your choices. Both switches start off.
-
-PWA Customizer **1.4.0** adds the matching integration. When both updated extensions are installed in the same profile, they mirror these six fields: color enabled, color mode, custom color, title enabled, title mode, and custom title. The two supported YouTube origins share the same choices. Sidebar/player/filter settings and PWA Customizer settings for other sites are never exchanged. An untouched installation imports an existing choice; subsequent saves use the latest revision, with a deterministic tie-break for simultaneous edits. Edits made while the companion is disabled reconcile when it is reopened or YouTube is revisited. Reset in YouTools resets the mirrored app settings too.
-
-YouTools applies the YouTube title and theme when both are available, avoiding competing DOM observers. PWA Customizer works independently when YouTools is absent. Mirroring does not grant PWA Customizer website access. Reload both extensions and open YouTube tabs/app windows after updating their unpacked files.
-
-The promotion at the bottom of **Customize app window** is combined with the mirroring explanation. It links to the Chrome Web Store homepage and says the listing is coming soon. Replace the link in `extension/pwa-popup.js` with PWA Customizer's actual listing URL after publication.
-
-### Companion identity for development and publication
-
-Chrome requires the recipient's extension ID for [cross-extension messaging](https://developer.chrome.com/docs/extensions/develop/concepts/messaging#external). Both manifests allow only the companion ID; no webpages can send these messages. Each worker also validates the sender and accepts only the YouTube settings protocol.
-
-These unpacked builds are configured for the current project folders, preserving their existing IDs and saved preferences. Unpacked IDs change when their full paths change. After moving either folder, run `node scripts/configure-pwa-sync.mjs` from the YouTools project, then reload both extensions. The sibling project folder is expected to be named `pwa customizer`.
-
-For Web Store builds, obtain both assigned IDs from draft store items and run `node scripts/configure-pwa-sync.mjs YOUTOOLS_ID PWA_CUSTOMIZER_ID`, then package both projects. This updates both manifests' allowlists. Do not publish a ZIP still configured with development IDs. No installation-list or extra website permission is needed.
-
-The title, theme, and value-normalization modules were copied from PWA Customizer into `pwa-title.js`, `pwa-theme.js`, and `pwa-shared.js`; they run entirely inside YouTools. Keep the identical `pwa-sync.js` files in both projects together when changing the protocol.
+YouTools is an independent project and is not affiliated with YouTube or Google.
