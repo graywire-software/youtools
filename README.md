@@ -74,8 +74,6 @@ npm test
 npm run package
 ```
 
-The tests run the extension in isolated browser profiles against controlled fixtures. `dist/YouTools-0.6.1.zip` is the packaged extension; it has not been submitted to the store.
-
 For PWA Customizer integration, both extensions must allowlist each other’s extension IDs. Unpacked IDs depend on their folder paths. After moving either project, run `node scripts/configure-pwa-sync.mjs` and reload both extensions; the sibling project is expected to be named `pwa customizer`. For store builds, pass both assigned IDs to that script before packaging. The promotional link in `extension/pwa-popup.js` also needs the actual listing URL before publication.
 
 YouTools is an independent project and is not affiliated with YouTube or Google.
