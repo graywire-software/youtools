@@ -1,6 +1,9 @@
-﻿# YouTools
+<img width="128" height="128" alt="128" src="https://github.com/user-attachments/assets/f86d040d-1b62-4c94-977e-d236f02d5bd4" />
 
-YouTools is a browser extension for making desktop YouTube feel more like yours. Add convenient player buttons, choose which kinds of content appear, and arrange the sidebar around the links you use. It works in Brave and Chrome and saves your choices in your browser.
+ 
+# YouTools
+
+YouTools is a Chrome extension for making desktop YouTube feel more like yours. Add convenient player buttons, choose which kinds of content appear, and arrange the sidebar around the links you use.
 
 ## What you can do
 
